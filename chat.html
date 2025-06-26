@@ -24,7 +24,7 @@
     <div class="flex flex-1 overflow-hidden">
 
         <!-- Sidebar -->
-        <aside class="w-72 bg-white border-r shadow-sm flex-shrink-0 flex flex-col p-4 max-md:w-20 max-md:p-2" style="height: 95vh;">
+        <aside class="w-72 bg-white border-r shadow-sm flex flex-col p-4 max-md:w-20 max-md:p-2" style="height: 95vh;">
             <!-- Search Bar (newly added) -->
             <div class="mb-4">
                 <div class="flex items-center bg-gray-100 rounded px-2 py-1">
@@ -37,13 +37,6 @@
                     <button id="userSearchBtn" class="text-gray-400 hover:text-indigo-600 px-2">
                         <i class="fa fa-search"></i>
                     </button>
-                </div>
-            </div>
-            <!-- Tabs -->
-            <div class="mb-4">
-                <div class="flex border-b">
-                    <button id="usersTab" class="px-4 py-2 text-sm font-semibold text-indigo-600 border-b-2 border-indigo-600 focus:outline-none">Users</button>
-                    <button id="groupsTab" class="px-4 py-2 text-sm font-semibold text-gray-500 hover:text-indigo-600 focus:outline-none">Groups</button>
                 </div>
             </div>
             <!-- Users List -->
@@ -77,42 +70,6 @@
                             <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-gray-300 border-2 border-white rounded-full"></span>
                         </span>
                         <span class="text-gray-800 text-sm font-medium max-md:hidden">Diane</span>
-                    </li>
-                </ul>
-            </div>
-            <!-- Groups List (hidden by default) -->
-            <div id="groupsList" class="flex-1 overflow-y-auto hidden">
-                <div class="flex items-center justify-between mb-2">
-                    <h2 class="text-gray-700 font-semibold text-sm">Groups</h2>
-                    <!-- Create Group Button -->
-                    <button id="createGroupBtn" class="flex items-center px-2 py-1 bg-indigo-500 text-white rounded text-xs hover:bg-indigo-600 transition">
-                        <i class="fa fa-plus mr-1"></i> Create
-                    </button>
-                </div>
-                <ul class="space-y-2" id="groupItems">
-                    <li class="flex items-center space-x-3 p-2 rounded hover:bg-gray-100 cursor-pointer" data-group="IT Department" data-members="Alice,Bob">
-                        <span class="relative">
-                            <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 font-bold">IT</span>
-                        </span>
-                        <span class="text-gray-800 text-sm font-medium max-md:hidden">IT Department</span>
-                    </li>
-                    <li class="flex items-center space-x-3 p-2 rounded hover:bg-gray-100 cursor-pointer">
-                        <span class="relative">
-                            <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-green-100 text-green-600 font-bold">ADM</span>
-                        </span>
-                        <span class="text-gray-800 text-sm font-medium max-md:hidden">Administration</span>
-                    </li>
-                    <li class="flex items-center space-x-3 p-2 rounded hover:bg-gray-100 cursor-pointer">
-                        <span class="relative">
-                            <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-yellow-100 text-yellow-600 font-bold">FIN</span>
-                        </span>
-                        <span class="text-gray-800 text-sm font-medium max-md:hidden">Finance</span>
-                    </li>
-                    <li class="flex items-center space-x-3 p-2 rounded hover:bg-gray-100 cursor-pointer">
-                        <span class="relative">
-                            <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-pink-100 text-pink-600 font-bold">ACD</span>
-                        </span>
-                        <span class="text-gray-800 text-sm font-medium max-md:hidden">Academic</span>
                     </li>
                 </ul>
             </div>
@@ -190,51 +147,6 @@
         </main>
     </div>
 
-    <!-- Create Group Modal -->
-    <div id="createGroupModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
-        <div class="bg-white rounded-lg shadow-lg w-full max-w-xs p-6 relative">
-            <button id="closeCreateGroupModal" class="absolute top-2 right-2 text-gray-400 hover:text-red-500 text-xl">&times;</button>
-            <h2 class="text-lg font-semibold text-gray-800 mb-4">Create Group</h2>
-            <form id="createGroupForm" class="space-y-4">
-                <div>
-                    <label class="block text-gray-700 mb-1" for="groupName">Group Name</label>
-                    <input type="text" id="groupName" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200" required>
-                </div>
-                <div>
-                    <label class="block text-gray-700 mb-1" for="groupUsers">Add People</label>
-                    <select id="groupUsers" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200" multiple size="4">
-                        <option value="Alice">Alice</option>
-                        <option value="Bob">Bob</option>
-                        <option value="Charles">Charles</option>
-                        <option value="Diane">Diane</option>
-                    </select>
-                    <p class="text-xs text-gray-400 mt-1">Hold Ctrl (Windows) or Cmd (Mac) to select multiple users.</p>
-                </div>
-                <button type="submit" class="w-full bg-indigo-500 text-white py-2 rounded hover:bg-indigo-600 transition font-semibold">Create</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Group Settings Modal -->
-    <div id="groupSettingsModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
-        <div class="bg-white rounded-lg shadow-lg w-full max-w-xs p-6 relative">
-            <button id="closeGroupSettingsModal" class="absolute top-2 right-2 text-gray-400 hover:text-red-500 text-xl">&times;</button>
-            <h2 class="text-lg font-semibold text-gray-800 mb-4" id="groupSettingsTitle">Group Settings</h2>
-            <div class="space-y-4">
-                <div>
-                    <label class="block text-gray-700 mb-1" for="editGroupName">Group Name</label>
-                    <input type="text" id="editGroupName" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200">
-                </div>
-                <div>
-                    <label class="block text-gray-700 mb-1">Members</label>
-                    <ul id="groupMembersList" class="text-sm text-gray-700 space-y-1"></ul>
-                </div>
-                <button id="leaveGroupBtn" class="w-full bg-red-100 text-red-600 py-2 rounded hover:bg-red-200 transition font-semibold mb-2">Leave Group</button>
-                <button id="saveGroupSettings" class="w-full bg-indigo-500 text-white py-2 rounded hover:bg-indigo-600 transition font-semibold">Save Changes</button>
-            </div>
-        </div>
-    </div>
-
     <script>
         function scrollToBottom() {
             const messages = document.getElementById('messages');
@@ -272,30 +184,6 @@
             // localStorage.clear();
             // sessionStorage.clear();
             window.location.href = "index.html";
-        });
-
-        // Sidebar Tabs Logic
-        const usersTab = document.getElementById('usersTab');
-        const groupsTab = document.getElementById('groupsTab');
-        const usersList = document.getElementById('usersList');
-        const groupsList = document.getElementById('groupsList');
-
-        usersTab.addEventListener('click', function() {
-            usersTab.classList.add('text-indigo-600', 'border-b-2', 'border-indigo-600');
-            usersTab.classList.remove('text-gray-500');
-            groupsTab.classList.remove('text-indigo-600', 'border-b-2', 'border-indigo-600');
-            groupsTab.classList.add('text-gray-500');
-            usersList.classList.remove('hidden');
-            groupsList.classList.add('hidden');
-        });
-
-        groupsTab.addEventListener('click', function() {
-            groupsTab.classList.add('text-indigo-600', 'border-b-2', 'border-indigo-600');
-            groupsTab.classList.remove('text-gray-500');
-            usersTab.classList.remove('text-indigo-600', 'border-b-2', 'border-indigo-600');
-            usersTab.classList.add('text-gray-500');
-            groupsList.classList.remove('hidden');
-            usersList.classList.add('hidden');
         });
 
         // Attachment choices logic
@@ -349,254 +237,6 @@
             alert('Voice note recording feature coming soon!');
         });
 
-        // Create Group Modal Logic
-        const createGroupBtn = document.getElementById('createGroupBtn');
-        const createGroupModal = document.getElementById('createGroupModal');
-        const closeCreateGroupModal = document.getElementById('closeCreateGroupModal');
-        const createGroupForm = document.getElementById('createGroupForm');
-        const groupItems = document.getElementById('groupItems');
-
-        if (createGroupBtn) {
-            createGroupBtn.addEventListener('click', () => {
-                createGroupModal.classList.remove('hidden');
-            });
-        }
-        if (closeCreateGroupModal) {
-            closeCreateGroupModal.addEventListener('click', () => {
-                createGroupModal.classList.add('hidden');
-            });
-        }
-        if (createGroupForm) {
-            createGroupForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                const name = document.getElementById('groupName').value.trim();
-                const usersSelect = document.getElementById('groupUsers');
-                const selectedUsers = Array.from(usersSelect.selectedOptions).map(opt => opt.value);
-                if (name) {
-                    // Add new group to the list (demo only)
-                    const initials = name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 3);
-                    const li = document.createElement('li');
-                    li.className = "flex flex-col space-y-1 p-2 rounded hover:bg-gray-100 cursor-pointer";
-                    li.setAttribute('data-group', name);
-                    li.setAttribute('data-members', selectedUsers.join(', '));
-                    li.innerHTML = `
-                        <div class="flex items-center space-x-3">
-                            <span class="relative">
-                                <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 font-bold">${initials}</span>
-                            </span>
-                            <span class="text-gray-800 text-sm font-medium max-md:hidden">${name}</span>
-                        </div>
-                        <div class="ml-11">
-                            <span class="text-xs text-gray-500">Members: ${selectedUsers.join(', ') || 'None'}</span>
-                        </div>
-                    `;
-                    groupItems.appendChild(li);
-                    createGroupModal.classList.add('hidden');
-                    createGroupForm.reset();
-                }
-            });
-        }
-        // Optional: Close modal on outside click
-        if (createGroupModal) {
-            createGroupModal.addEventListener('click', function(e) {
-                if (e.target === createGroupModal) {
-                    createGroupModal.classList.add('hidden');
-                }
-            });
-        }
-
-        // Group chat switching logic
-        function setGroupChat(name, members, initials, color) {
-            document.getElementById('chatHeaderAvatar').src = '';
-            document.getElementById('chatHeaderAvatar').className = `w-8 h-8 rounded-full bg-${color}-100 flex items-center justify-center text-${color}-600 font-bold`;
-            document.getElementById('chatHeaderAvatar').style.background = '';
-            document.getElementById('chatHeaderAvatar').alt = 'Group';
-            document.getElementById('chatHeaderAvatar').outerHTML = `<span id="chatHeaderAvatar" class="w-8 h-8 rounded-full bg-${color}-100 flex items-center justify-center text-${color}-600 font-bold">${initials}</span>`;
-            document.getElementById('chatHeaderName').textContent = name;
-            document.getElementById('chatHeaderStatus').textContent = `Members: ${members}`;
-            document.getElementById('messages').innerHTML = `
-                <div class="flex justify-center items-center h-full text-gray-400 text-sm">
-                    Start a conversation in ${name}.
-                </div>
-            `;
-        }
-
-        // User chat switching logic
-        function setUserChat(name, avatar, status) {
-            // Restore avatar image for user
-            const chatHeader = document.getElementById('chatHeader');
-            let avatarElem = document.getElementById('chatHeaderAvatar');
-            if (!avatarElem || avatarElem.tagName !== 'IMG') {
-                // Replace span with img if needed
-                const newImg = document.createElement('img');
-                newImg.id = 'chatHeaderAvatar';
-                newImg.className = 'w-8 h-8 rounded-full';
-                newImg.alt = 'Chat';
-                chatHeader.replaceChild(newImg, chatHeader.querySelector('#chatHeaderAvatar'));
-                avatarElem = newImg;
-            }
-            avatarElem.src = avatar;
-            avatarElem.className = 'w-8 h-8 rounded-full';
-            avatarElem.alt = name;
-
-            document.getElementById('chatHeaderName').textContent = name;
-            document.getElementById('chatHeaderStatus').textContent = status || 'Online';
-            document.getElementById('messages').innerHTML = `
-                <div class="flex justify-center items-center h-full text-gray-400 text-sm">
-                    Start a conversation with ${name}.
-                </div>
-            `;
-        }
-
-        // Click handler for user items
-        document.querySelectorAll('#usersList ul li').forEach(function(li) {
-            li.addEventListener('click', function() {
-                const name = li.querySelector('span.text-gray-800')?.textContent || 'User';
-                const avatar = li.querySelector('img')?.src || '';
-                setUserChat(name, avatar, 'Online');
-            });
-        });
-
-        // Click handler for group items (update to show default chat for static groups too)
-        document.querySelectorAll('#groupItems li').forEach(function(li) {
-            li.addEventListener('click', function() {
-                const name = li.querySelector('span.text-gray-800')?.textContent || 'Group';
-                const initials = li.querySelector('span.font-bold')?.textContent || 'GRP';
-                let color = 'indigo';
-                if (initials === 'ADM') color = 'green';
-                if (initials === 'FIN') color = 'yellow';
-                if (initials === 'ACD') color = 'pink';
-                // Try to get members from data-members attribute or show default
-                const members = li.getAttribute('data-members') || 'Members not listed';
-                setGroupChat(name, members, initials, color);
-            });
-        });
-
-        // When creating a group, add data attributes for group chat
-        if (createGroupForm) {
-            createGroupForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                const name = document.getElementById('groupName').value.trim();
-                const usersSelect = document.getElementById('groupUsers');
-                const selectedUsers = Array.from(usersSelect.selectedOptions).map(opt => opt.value);
-                if (name) {
-                    const initials = name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 3);
-                    let color = 'indigo';
-                    if (initials === 'ADM') color = 'green';
-                    if (initials === 'FIN') color = 'yellow';
-                    if (initials === 'ACD') color = 'pink';
-                    const li = document.createElement('li');
-                    li.className = "flex flex-col space-y-1 p-2 rounded hover:bg-gray-100 cursor-pointer";
-                    li.setAttribute('data-group', name);
-                    li.setAttribute('data-members', selectedUsers.join(', '));
-                    li.innerHTML = `
-                        <div class="flex items-center space-x-3">
-                            <span class="relative">
-                                <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-${color}-100 text-${color}-600 font-bold">${initials}</span>
-                            </span>
-                            <span class="text-gray-800 text-sm font-medium max-md:hidden">${name}</span>
-                        </div>
-                        <div class="ml-11">
-                            <span class="text-xs text-gray-500">Members: ${selectedUsers.join(', ') || 'None'}</span>
-                        </div>
-                    `;
-                    groupItems.appendChild(li);
-                    createGroupModal.classList.add('hidden');
-                    createGroupForm.reset();
-                }
-            });
-        }
-
-        // Group Settings Modal Logic
-        let currentGroupLi = null;
-
-        // Add settings icon to each group item (existing and new)
-        function addSettingsIconToGroup(li) {
-            if (!li.querySelector('.group-settings-btn')) {
-                const btn = document.createElement('button');
-                btn.type = 'button';
-                btn.title = 'Group Settings';
-                btn.className = 'group-settings-btn ml-auto text-gray-400 hover:text-indigo-600';
-                btn.innerHTML = '<i class="fa fa-cog"></i>';
-                btn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    openGroupSettings(li);
-                });
-                li.querySelector('.flex.items-center').appendChild(btn);
-            }
-        }
-        // Add to all existing group items
-        document.querySelectorAll('#groupItems > li').forEach(addSettingsIconToGroup);
-
-        // Add to new group items
-        const groupItemsObserver = new MutationObserver(function(mutations) {
-            mutations.forEach(function(mutation) {
-                mutation.addedNodes.forEach(function(node) {
-                    if (node.nodeType === 1 && node.matches('li')) {
-                        addSettingsIconToGroup(node);
-                    }
-                });
-            });
-        });
-        groupItemsObserver.observe(document.getElementById('groupItems'), { childList: true });
-
-        // Demo: Current user
-        const currentUser = "John Doe";
-
-        // Open group settings modal
-        function openGroupSettings(li) {
-            currentGroupLi = li;
-            const name = li.querySelector('span.text-gray-800')?.textContent || '';
-            const members = (li.getAttribute('data-members') || '').split(',').map(m => m.trim()).filter(Boolean);
-            document.getElementById('editGroupName').value = name;
-            document.getElementById('groupSettingsTitle').textContent = `Group Settings: ${name}`;
-            const membersList = document.getElementById('groupMembersList');
-            membersList.innerHTML = members.length
-                ? members.map(m => `<li>${m}${m === currentUser ? ' <span class="text-xs text-indigo-500">(You)</span>' : ''}</li>`).join('')
-                : '<li class="text-gray-400">No members</li>';
-            // Show or hide "Leave Group" button
-            document.getElementById('leaveGroupBtn').style.display = members.includes(currentUser) ? '' : 'none';
-            document.getElementById('groupSettingsModal').classList.remove('hidden');
-        }
-
-        // Leave group logic (demo: just removes yourself from members in UI)
-        document.getElementById('leaveGroupBtn').onclick = function() {
-            if (currentGroupLi) {
-                let members = (currentGroupLi.getAttribute('data-members') || '').split(',').map(m => m.trim()).filter(Boolean);
-                const idx = members.indexOf(currentUser);
-                if (idx !== -1) members.splice(idx, 1);
-                currentGroupLi.setAttribute('data-members', members.join(', '));
-                // Update members display in modal
-                const membersList = document.getElementById('groupMembersList');
-                membersList.innerHTML = members.length
-                    ? members.map(m => `<li>${m}${m === currentUser ? ' <span class="text-xs text-indigo-500">(You)</span>' : ''}</li>`).join('')
-                    : '<li class="text-gray-400">No members</li>';
-                // Optionally, hide the group from sidebar if you are not a member anymore
-                if (!members.includes(currentUser)) {
-                    setTimeout(() => {
-                        currentGroupLi.style.display = "none";
-                        document.getElementById('groupSettingsModal').classList.add('hidden');
-                    }, 800);
-                }
-            }
-        };
-
-        // Save changes (demo: only updates group name in UI)
-        document.getElementById('saveGroupSettings').onclick = function() {
-            if (currentGroupLi) {
-                const newName = document.getElementById('editGroupName').value.trim();
-                if (newName) {
-                    currentGroupLi.querySelector('span.text-gray-800').textContent = newName;
-                    // Optionally update initials
-                    const initials = newName.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 3);
-                    currentGroupLi.querySelector('span.font-bold').textContent = initials;
-                    // Update modal title
-                    document.getElementById('groupSettingsTitle').textContent = `Group Settings: ${newName}`;
-                }
-                document.getElementById('groupSettingsModal').classList.add('hidden');
-            }
-        };
-
         // User search logic
         const userSearchInput = document.getElementById('userSearchInput');
         const usersListUl = document.querySelector('#usersList ul');
@@ -611,6 +251,15 @@
 
         userSearchInput.addEventListener('input', filterUsers);
         document.getElementById('userSearchBtn').addEventListener('click', filterUsers);
+
+        // Click handler for user items
+        document.querySelectorAll('#usersList ul li').forEach(function(li) {
+            li.addEventListener('click', function() {
+                const name = li.querySelector('span.text-gray-800')?.textContent || 'User';
+                const avatar = li.querySelector('img')?.src || '';
+                setUserChat(name, avatar, 'Online');
+            });
+        });
     </script>
 </body>
 </html>
