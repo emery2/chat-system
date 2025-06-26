@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>INES-Ruhengeri Converse - Login & Register</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col items-center justify-center">
+    <!-- Logo -->
+    <div class="w-full flex justify-center mt-8 mb-4">
+        <img src="https://ines.ac.rw/wp-content/uploads/2021/06/INES-Logo-1.png" alt="INES-Ruhengeri Logo" class="h-20 w-auto">
+    </div>
+    <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">INES-Ruhengeri Converse</h1>
+
+    <!-- Alerts -->
+    <div id="alert-success" class="hidden mb-4 w-full max-w-md bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+        <span class="block sm:inline">Success! Your action was completed.</span>
+    </div>
+    <div id="alert-error" class="hidden mb-4 w-full max-w-md bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+        <span class="block sm:inline">Error! Please check your input.</span>
+    </div>
+
+    <!-- Card Container -->
+    <div class="w-full max-w-2xl bg-white rounded-xl shadow-lg p-6 flex flex-col md:flex-row gap-8">
+        <!-- Login Form -->
+        <div class="flex-1" id="loginSection">
+            <h2 class="text-xl font-semibold text-gray-700 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-right-to-bracket text-indigo-500"></i> Login
+            </h2>
+            <form id="loginForm" novalidate>
+                <div class="mb-4">
+                    <label class="block text-gray-600 mb-1" for="loginEmail">INES Email</label>
+                    <div class="relative">
+                        <input type="email" id="loginEmail" name="loginEmail" class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-indigo-300" placeholder="yourname@ines.ac.rw" required>
+                        <i class="fa-solid fa-envelope absolute right-3 top-3 text-gray-400"></i>
+                    </div>
+                    <p class="text-red-500 text-sm mt-1 hidden" id="loginEmailError"></p>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-600 mb-1" for="loginPassword">Password</label>
+                    <div class="relative">
+                        <input type="password" id="loginPassword" name="loginPassword" class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-indigo-300" placeholder="Password" required>
+                        <i class="fa-solid fa-lock absolute right-3 top-3 text-gray-400"></i>
+                    </div>
+                    <p class="text-red-500 text-sm mt-1 hidden" id="loginPasswordError"></p>
+                </div>
+                <div class="mb-4 flex justify-end">
+                    <button type="button" id="forgotPasswordBtn" class="text-sm text-indigo-600 hover:underline font-medium">Forgot password?</button>
+                </div>
+                <button type="submit" class="w-full bg-indigo-500 text-white py-2 rounded hover:bg-indigo-600 transition-colors font-semibold flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-arrow-right-to-bracket"></i> Login
+                </button>
+            </form>
+            <div class="mt-4 text-center">
+                <button id="showRegisterBtn" class="text-indigo-600 hover:underline font-medium">Don't have an account? Register</button>
+            </div>
+        </div>
+        <!-- Divider -->
+        <div id="divider" class="hidden md:flex flex-col justify-center items-center px-2">
+            <div class="w-px h-48 bg-gray-200"></div>
+        </div>
+        <!-- Registration Form -->
+        <div id="registerSection" class="flex-1 hidden">
+            <h2 class="text-xl font-semibold text-gray-700 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-user-plus text-indigo-500"></i> Register
+            </h2>
+            <form id="registerForm" novalidate>
+                <div class="mb-3">
+                    <label class="block text-gray-600 mb-1" for="fullName">Full Name</label>
+                    <div class="relative">
+                        <input type="text" id="fullName" name="fullName" class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-indigo-300" placeholder="Your full name" required>
+                        <i class="fa-solid fa-user absolute right-3 top-3 text-gray-400"></i>
+                    </div>
+                    <p class="text-red-500 text-sm mt-1 hidden" id="fullNameError"></p>
+                </div>
+                <div class="mb-3">
+                    <label class="block text-gray-600 mb-1" for="regEmail">INES Email</label>
+                    <div class="relative">
+                        <input type="email" id="regEmail" name="regEmail" class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-indigo-300" placeholder="yourname@ines.ac.rw" required>
+                        <i class="fa-solid fa-envelope absolute right-3 top-3 text-gray-400"></i>
+                    </div>
+                    <p class="text-red-500 text-sm mt-1 hidden" id="regEmailError"></p>
+                </div>
+                <div class="mb-3">
+                    <label class="block text-gray-600 mb-1" for="regPassword">Password</label>
+                    <div class="relative">
+                        <input type="password" id="regPassword" name="regPassword" class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-indigo-300" placeholder="Password" required>
+                        <i class="fa-solid fa-lock absolute right-3 top-3 text-gray-400"></i>
+                    </div>
+                    <div class="flex items-center mt-1">
+                        <div id="passwordStrength" class="h-2 w-24 rounded bg-gray-200 mr-2"></div>
+                        <span id="passwordStrengthText" class="text-xs text-gray-500"></span>
+                    </div>
+                    <p class="text-red-500 text-sm mt-1 hidden" id="regPasswordError"></p>
+                </div>
+                <div class="mb-3">
+                    <label class="block text-gray-600 mb-1" for="confirmPassword">Confirm Password</label>
+                    <div class="relative">
+                        <input type="password" id="confirmPassword" name="confirmPassword" class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-indigo-300" placeholder="Confirm Password" required>
+                        <i class="fa-solid fa-lock absolute right-3 top-3 text-gray-400"></i>
+                    </div>
+                    <p class="text-red-500 text-sm mt-1 hidden" id="confirmPasswordError"></p>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-600 mb-1" for="department">Department</label>
+                    <select id="department" name="department" class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-indigo-300" required>
+                        <option value="">Select Department</option>
+                        <option>Biotechnology</option>
+                        <option>Biomedical Laboratory Sciences</option>
+                        <option>Computer Science</option>
+                        <option>Information Technology</option>
+                        <option>Statistics Applied to Economy</option>
+                        <option>Statistics Applied to Management</option>
+                        <option>Statistics Applied to Health</option>
+                        <option>Statistics Applied to Engineering</option>
+                        <option>Land Survey</option>
+                        <option>Urban and Regional Planning</option>
+                        <option>Land Administration and Management</option>
+                        <option>Civil Engineering</option>
+                        <option>Water Engineering</option>
+                        <option>Electrical Engineering</option>
+                        <option>French-English with Education</option>
+                        <option>Accounting</option>
+                        <option>Finance</option>
+                        <option>Entrepreneurship Development</option>
+                    </select>
+                    <p class="text-red-500 text-sm mt-1 hidden" id="departmentError"></p>
+                </div>
+                <button type="submit" class="w-full bg-indigo-500 text-white py-2 rounded hover:bg-indigo-600 transition-colors font-semibold flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-user-plus"></i> Register
+                </button>
+            </form>
+            <div class="mt-4 text-center">
+                <button id="showLoginBtn" class="text-indigo-600 hover:underline font-medium">Already have an account? Login</button>
+            </div>
+        </div>
+        <!-- Forgot Password Form -->
+        <div id="forgotPasswordSection" class="flex-1 hidden">
+            <h2 class="text-xl font-semibold text-gray-700 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-unlock-keyhole text-indigo-500"></i> Forgot Password
+            </h2>
+            <form id="forgotPasswordForm" novalidate>
+                <div class="mb-4">
+                    <label class="block text-gray-600 mb-1" for="forgotEmail">INES Email</label>
+                    <div class="relative">
+                        <input type="email" id="forgotEmail" name="forgotEmail" class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-indigo-300" placeholder="yourname@ines.ac.rw" required>
+                        <i class="fa-solid fa-envelope absolute right-3 top-3 text-gray-400"></i>
+                    </div>
+                    <p class="text-red-500 text-sm mt-1 hidden" id="forgotEmailError"></p>
+                </div>
+                <button type="submit" class="w-full bg-indigo-500 text-white py-2 rounded hover:bg-indigo-600 transition-colors font-semibold flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-paper-plane"></i> Send Reset Link
+                </button>
+            </form>
+            <div class="mt-4 text-center">
+                <button id="backToLoginBtn" class="text-indigo-600 hover:underline font-medium">Back to Login</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Lucide icons init
+        lucide.createIcons();
+
+        // Toggle Register/Login/Forgot Password
+        const showRegisterBtn = document.getElementById('showRegisterBtn');
+        const showLoginBtn = document.getElementById('showLoginBtn');
+        const forgotPasswordBtn = document.getElementById('forgotPasswordBtn');
+        const backToLoginBtn = document.getElementById('backToLoginBtn');
+        const registerSection = document.getElementById('registerSection');
+        const forgotPasswordSection = document.getElementById('forgotPasswordSection');
+        const divider = document.getElementById('divider');
+        const loginSection = document.getElementById('loginSection');
+
+        showRegisterBtn.addEventListener('click', function() {
+            loginSection.classList.add('hidden');
+            registerSection.classList.remove('hidden');
+            divider.classList.add('hidden');
+            forgotPasswordSection.classList.add('hidden');
+        });
+
+        document.addEventListener('click', function(e) {
+            if (e.target && e.target.id === 'showLoginBtn') {
+                registerSection.classList.add('hidden');
+                loginSection.classList.remove('hidden');
+                divider.classList.remove('hidden');
+                forgotPasswordSection.classList.add('hidden');
+            }
+        });
+
+        forgotPasswordBtn.addEventListener('click', function() {
+            loginSection.classList.add('hidden');
+            registerSection.classList.add('hidden');
+            divider.classList.add('hidden');
+            forgotPasswordSection.classList.remove('hidden');
+        });
+
+        backToLoginBtn.addEventListener('click', function() {
+            forgotPasswordSection.classList.add('hidden');
+            loginSection.classList.remove('hidden');
+            divider.classList.remove('hidden');
+        });
+
+        // Password strength indicator
+        const regPassword = document.getElementById('regPassword');
+        const passwordStrength = document.getElementById('passwordStrength');
+        const passwordStrengthText = document.getElementById('passwordStrengthText');
+
+        regPassword.addEventListener('input', function() {
+            const val = regPassword.value;
+            let score = 0;
+            if (val.length >= 8) score++;
+            if (/[A-Z]/.test(val)) score++;
+            if (/[0-9]/.test(val)) score++;
+            if (/[^A-Za-z0-9]/.test(val)) score++;
+            // Set color and text
+            let color = 'bg-gray-200', text = 'Weak';
+            if (score === 1) { color = 'bg-red-400'; text = 'Weak'; }
+            else if (score === 2) { color = 'bg-yellow-400'; text = 'Fair'; }
+            else if (score === 3) { color = 'bg-blue-400'; text = 'Good'; }
+            else if (score === 4) { color = 'bg-green-500'; text = 'Strong'; }
+            passwordStrength.className = `h-2 w-24 rounded ${color} mr-2`;
+            passwordStrengthText.textContent = text;
+        });
+
+        // Login form validation
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            let valid = true;
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            // Email validation
+            if (!email.match(/^[a-zA-Z0-9._%+-]+@ines\.ac\.rw$/)) {
+                showError('loginEmailError', 'Please enter a valid INES email.');
+                valid = false;
+            } else {
+                hideError('loginEmailError');
+            }
+            // Password validation
+            if (password.length < 6) {
+                showError('loginPasswordError', 'Password must be at least 6 characters.');
+                valid = false;
+            } else {
+                hideError('loginPasswordError');
+            }
+            if (valid) {
+                // Placeholder for success
+                showAlert('alert-success', 'Login successful! (Demo only)');
+            } else {
+                showAlert('alert-error', 'Please fix the errors above.');
+            }
+        });
+
+        // Registration form validation
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            let valid = true;
+            const fullName = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const password = document.getElementById('regPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const department = document.getElementById('department').value;
+
+            // Full Name
+            if (fullName.length < 3) {
+                showError('fullNameError', 'Please enter your full name.');
+                valid = false;
+            } else {
+                hideError('fullNameError');
+            }
+            // Email
+            if (!email.match(/^[a-zA-Z0-9._%+-]+@ines\.ac\.rw$/)) {
+                showError('regEmailError', 'Please enter a valid INES email.');
+                valid = false;
+            } else {
+                hideError('regEmailError');
+            }
+            // Password
+            if (password.length < 8) {
+                showError('regPasswordError', 'Password must be at least 8 characters.');
+                valid = false;
+            } else {
+                hideError('regPasswordError');
+            }
+            // Confirm Password
+            if (confirmPassword !== password || confirmPassword === '') {
+                showError('confirmPasswordError', 'Passwords do not match.');
+                valid = false;
+            } else {
+                hideError('confirmPasswordError');
+            }
+            // Department
+            if (!department) {
+                showError('departmentError', 'Please select your department.');
+                valid = false;
+            } else {
+                hideError('departmentError');
+            }
+            if (valid) {
+                showAlert('alert-success', 'Registration successful! (Demo only)');
+            } else {
+                showAlert('alert-error', 'Please fix the errors above.');
+            }
+        });
+
+        // Forgot Password form validation
+        document.getElementById('forgotPasswordForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('forgotEmail').value.trim();
+            let valid = true;
+            if (!email.match(/^[a-zA-Z0-9._%+-]+@ines\.ac\.rw$/)) {
+                showError('forgotEmailError', 'Please enter a valid INES email.');
+                valid = false;
+            } else {
+                hideError('forgotEmailError');
+            }
+            if (valid) {
+                showAlert('alert-success', 'Password reset link sent! (Demo only)');
+            } else {
+                showAlert('alert-error', 'Please fix the errors above.');
+            }
+        });
+
+        function showError(id, msg) {
+            const el = document.getElementById(id);
+            el.textContent = msg;
+            el.classList.remove('hidden');
+        }
+        function hideError(id) {
+            const el = document.getElementById(id);
+            el.textContent = '';
+            el.classList.add('hidden');
+        }
+        function showAlert(id, msg) {
+            document.getElementById('alert-success').classList.add('hidden');
+            document.getElementById('alert-error').classList.add('hidden');
+            const el = document.getElementById(id);
+            el.querySelector('span').textContent = msg;
+            el.classList.remove('hidden');
+            setTimeout(() => { el.classList.add('hidden'); }, 3000);
+        }
+    </script>
+</body>
+</html>
