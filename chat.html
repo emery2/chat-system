@@ -6,29 +6,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Removed favicon icon -->
+    <!-- Add Font Awesome if not already present in your <head> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
 </head>
 <body class="bg-gray-50 min-h-screen flex flex-col">
 
     <!-- Top Navigation Bar -->
     <nav class="flex items-center justify-between bg-white shadow-sm px-4 py-2">
         <div class="flex items-center space-x-3">
-            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User Avatar" class="w-10 h-10 rounded-full border-2 border-green-400">
-            <span class="font-semibold text-gray-800 text-lg">John Doe</span>
+            <!-- Removed user avatar image and John Doe from top bar -->
         </div>
-        <button class="bg-red-100 text-red-600 px-4 py-1 rounded hover:bg-red-200 transition font-medium">Logout</button>
+        <div class="flex items-center space-x-2">
+            <!-- Removed logout button from top bar -->
+        </div>
     </nav>
 
     <div class="flex flex-1 overflow-hidden">
 
         <!-- Sidebar -->
-        <aside class="w-72 bg-white border-r shadow-sm flex-shrink-0 flex flex-col p-4 space-y-4
-                                    max-md:w-20 max-md:p-2">
+        <aside class="w-72 bg-white border-r shadow-sm flex-shrink-0 flex flex-col p-4 max-md:w-20 max-md:p-2" style="height: 95vh;">
+            <!-- Search Bar (newly added) -->
+            <div class="mb-4">
+                <div class="flex items-center bg-gray-100 rounded px-2 py-1">
+                    <input
+                        id="userSearchInput"
+                        type="text"
+                        placeholder="Search users..."
+                        class="flex-1 bg-transparent outline-none px-2 py-1 text-sm"
+                    />
+                    <button id="userSearchBtn" class="text-gray-400 hover:text-indigo-600 px-2">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- Tabs -->
+            <div class="mb-4">
+                <div class="flex border-b">
+                    <button id="usersTab" class="px-4 py-2 text-sm font-semibold text-indigo-600 border-b-2 border-indigo-600 focus:outline-none">Users</button>
+                    <button id="groupsTab" class="px-4 py-2 text-sm font-semibold text-gray-500 hover:text-indigo-600 focus:outline-none">Groups</button>
+                </div>
+            </div>
             <!-- Users List -->
-            <div class="flex-1 overflow-y-auto">
+            <div id="usersList" class="flex-1 overflow-y-auto" style="min-height: 400px;">
                 <h2 class="text-gray-700 font-semibold mb-2 text-sm">Users</h2>
                 <ul class="space-y-2">
-                    <!-- Individual Users Only -->
                     <li class="flex items-center space-x-3 p-2 rounded hover:bg-gray-100 cursor-pointer">
                         <span class="relative">
                             <img src="https://randomuser.me/api/portraits/women/44.jpg" class="w-8 h-8 rounded-full border-2 border-green-400" alt="User">
@@ -59,11 +80,17 @@
                     </li>
                 </ul>
             </div>
-            <!-- Groups Section -->
-            <div>
-                <h2 class="text-gray-700 font-semibold mb-2 text-sm">Groups</h2>
-                <ul class="space-y-2">
-                    <li class="flex items-center space-x-3 p-2 rounded hover:bg-gray-100 cursor-pointer">
+            <!-- Groups List (hidden by default) -->
+            <div id="groupsList" class="flex-1 overflow-y-auto hidden">
+                <div class="flex items-center justify-between mb-2">
+                    <h2 class="text-gray-700 font-semibold text-sm">Groups</h2>
+                    <!-- Create Group Button -->
+                    <button id="createGroupBtn" class="flex items-center px-2 py-1 bg-indigo-500 text-white rounded text-xs hover:bg-indigo-600 transition">
+                        <i class="fa fa-plus mr-1"></i> Create
+                    </button>
+                </div>
+                <ul class="space-y-2" id="groupItems">
+                    <li class="flex items-center space-x-3 p-2 rounded hover:bg-gray-100 cursor-pointer" data-group="IT Department" data-members="Alice,Bob">
                         <span class="relative">
                             <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 font-bold">IT</span>
                         </span>
@@ -89,22 +116,34 @@
                     </li>
                 </ul>
             </div>
+            <!-- Profile Section Below -->
+            <div class="mt-6 pt-4 border-t flex flex-col flex-grow justify-end">
+                <h2 class="text-gray-700 font-semibold mb-2 text-sm">Profile</h2>
+                <div class="flex flex-col items-center space-y-2">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile" class="w-14 h-14 rounded-full border-2 border-indigo-400">
+                    <span class="font-medium text-gray-800">John Doe</span>
+                    <span class="text-xs text-gray-500">johndoe@ines.ac.rw</span>
+                </div>
+                <div class="mt-4 grid grid-cols-2 gap-3 w-full">
+                    <a href="profile.html" class="px-3 py-2 bg-indigo-50 text-indigo-700 rounded hover:bg-indigo-100 text-sm font-medium text-center transition">Edit Profile</a>
+                    <button id="logoutBtn" class="bg-red-100 text-red-600 px-3 py-2 rounded hover:bg-red-200 text-sm font-medium transition w-full">Logout</button>
+                </div>
+            </div>
         </aside>
 
         <!-- Main Chat Area -->
         <main class="flex-1 flex flex-col bg-gray-50">
-            <!-- Chat Header (individual chat name) -->
-            <div class="px-4 py-3 border-b bg-white flex items-center space-x-3 shadow-sm">
-                <img src="https://randomuser.me/api/portraits/men/45.jpg" class="w-8 h-8 rounded-full" alt="Chat">
+            <!-- Chat Header (individual or group chat name) -->
+            <div id="chatHeader" class="px-4 py-3 border-b bg-white flex items-center space-x-3 shadow-sm">
+                <img id="chatHeaderAvatar" src="https://randomuser.me/api/portraits/men/45.jpg" class="w-8 h-8 rounded-full" alt="Chat">
                 <div>
-                    <div class="font-semibold text-gray-800">Bob</div>
-                    <div class="text-xs text-gray-500">Online</div>
+                    <div id="chatHeaderName" class="font-semibold text-gray-800">Bob</div>
+                    <div id="chatHeaderStatus" class="text-xs text-gray-500">Online</div>
                 </div>
             </div>
-            <!-- Messages List (blank) -->
+            <!-- Messages List -->
             <div id="messages" class="flex-1 overflow-y-auto px-4 py-4 space-y-4 bg-gray-50"
-                     style="scroll-behavior: smooth;">
-                <!-- No messages yet -->
+                 style="scroll-behavior: smooth;">
                 <div class="flex justify-center items-center h-full text-gray-400 text-sm">
                     Start a conversation with Bob.
                 </div>
@@ -112,18 +151,88 @@
             <!-- Message Input -->
             <form class="bg-white px-4 py-3 flex items-center space-x-2 border-t shadow-sm"
                         onsubmit="event.preventDefault(); sendMessage();">
-                <button type="button" class="text-gray-400 hover:text-yellow-500 text-2xl">
-                    <span>😊</span>
-                </button>
+                <!-- Attachment Button with Choices (left) -->
+                <div class="relative">
+                    <button type="button" id="attachmentBtn" class="text-gray-400 hover:text-indigo-500 text-2xl flex items-center focus:outline-none">
+                        <i class="fa-solid fa-paperclip"></i>
+                    </button>
+                    <div id="attachmentMenu" class="absolute left-0 bottom-10 z-10 bg-white border rounded shadow-lg w-48 hidden">
+                        <button type="button" class="w-full px-4 py-2 text-left hover:bg-gray-100 text-sm" onclick="chooseAttachment('image')">
+                            <i class="fa-regular fa-image mr-2"></i>Image
+                        </button>
+                        <button type="button" class="w-full px-4 py-2 text-left hover:bg-gray-100 text-sm" onclick="chooseAttachment('music')">
+                            <i class="fa-solid fa-music mr-2"></i>Music
+                        </button>
+                        <button type="button" class="w-full px-4 py-2 text-left hover:bg-gray-100 text-sm" onclick="chooseAttachment('docs')">
+                            <i class="fa-regular fa-file-lines mr-2"></i>Docs
+                        </button>
+                        <button type="button" class="w-full px-4 py-2 text-left hover:bg-gray-100 text-sm" onclick="chooseAttachment('camera')">
+                            <i class="fa-solid fa-camera mr-2"></i>Camera
+                        </button>
+                    </div>
+                    <!-- Hidden file inputs -->
+                    <input id="attachmentInputImage" type="file" accept="image/*" class="hidden" />
+                    <input id="attachmentInputMusic" type="file" accept="audio/*" class="hidden" />
+                    <input id="attachmentInputDocs" type="file" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,text/plain,application/pdf" class="hidden" />
+                </div>
                 <input id="messageInput" type="text" placeholder="Type your message..."
                              class="flex-1 rounded-full border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200 text-gray-800 shadow-sm"
                              autocomplete="off">
+                <!-- Voice Note Button (right) -->
+                <button type="button" id="voiceNoteBtn" class="text-gray-400 hover:text-indigo-500 text-2xl flex items-center focus:outline-none" title="Record Voice Note">
+                    <i class="fa-solid fa-microphone"></i>
+                </button>
                 <button type="submit"
                                 class="bg-indigo-500 text-white px-5 py-2 rounded-full shadow hover:bg-indigo-600 transition font-semibold">
                     Send
                 </button>
             </form>
         </main>
+    </div>
+
+    <!-- Create Group Modal -->
+    <div id="createGroupModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg shadow-lg w-full max-w-xs p-6 relative">
+            <button id="closeCreateGroupModal" class="absolute top-2 right-2 text-gray-400 hover:text-red-500 text-xl">&times;</button>
+            <h2 class="text-lg font-semibold text-gray-800 mb-4">Create Group</h2>
+            <form id="createGroupForm" class="space-y-4">
+                <div>
+                    <label class="block text-gray-700 mb-1" for="groupName">Group Name</label>
+                    <input type="text" id="groupName" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200" required>
+                </div>
+                <div>
+                    <label class="block text-gray-700 mb-1" for="groupUsers">Add People</label>
+                    <select id="groupUsers" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200" multiple size="4">
+                        <option value="Alice">Alice</option>
+                        <option value="Bob">Bob</option>
+                        <option value="Charles">Charles</option>
+                        <option value="Diane">Diane</option>
+                    </select>
+                    <p class="text-xs text-gray-400 mt-1">Hold Ctrl (Windows) or Cmd (Mac) to select multiple users.</p>
+                </div>
+                <button type="submit" class="w-full bg-indigo-500 text-white py-2 rounded hover:bg-indigo-600 transition font-semibold">Create</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Group Settings Modal -->
+    <div id="groupSettingsModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg shadow-lg w-full max-w-xs p-6 relative">
+            <button id="closeGroupSettingsModal" class="absolute top-2 right-2 text-gray-400 hover:text-red-500 text-xl">&times;</button>
+            <h2 class="text-lg font-semibold text-gray-800 mb-4" id="groupSettingsTitle">Group Settings</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-gray-700 mb-1" for="editGroupName">Group Name</label>
+                    <input type="text" id="editGroupName" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200">
+                </div>
+                <div>
+                    <label class="block text-gray-700 mb-1">Members</label>
+                    <ul id="groupMembersList" class="text-sm text-gray-700 space-y-1"></ul>
+                </div>
+                <button id="leaveGroupBtn" class="w-full bg-red-100 text-red-600 py-2 rounded hover:bg-red-200 transition font-semibold mb-2">Leave Group</button>
+                <button id="saveGroupSettings" class="w-full bg-indigo-500 text-white py-2 rounded hover:bg-indigo-600 transition font-semibold">Save Changes</button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -156,6 +265,352 @@
             input.value = '';
             scrollToBottom();
         }
+
+        // Logout button functionality
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            // Optionally clear session/local storage here
+            // localStorage.clear();
+            // sessionStorage.clear();
+            window.location.href = "index.html";
+        });
+
+        // Sidebar Tabs Logic
+        const usersTab = document.getElementById('usersTab');
+        const groupsTab = document.getElementById('groupsTab');
+        const usersList = document.getElementById('usersList');
+        const groupsList = document.getElementById('groupsList');
+
+        usersTab.addEventListener('click', function() {
+            usersTab.classList.add('text-indigo-600', 'border-b-2', 'border-indigo-600');
+            usersTab.classList.remove('text-gray-500');
+            groupsTab.classList.remove('text-indigo-600', 'border-b-2', 'border-indigo-600');
+            groupsTab.classList.add('text-gray-500');
+            usersList.classList.remove('hidden');
+            groupsList.classList.add('hidden');
+        });
+
+        groupsTab.addEventListener('click', function() {
+            groupsTab.classList.add('text-indigo-600', 'border-b-2', 'border-indigo-600');
+            groupsTab.classList.remove('text-gray-500');
+            usersTab.classList.remove('text-indigo-600', 'border-b-2', 'border-indigo-600');
+            usersTab.classList.add('text-gray-500');
+            groupsList.classList.remove('hidden');
+            usersList.classList.add('hidden');
+        });
+
+        // Attachment choices logic
+        const attachmentBtn = document.getElementById('attachmentBtn');
+        const attachmentMenu = document.getElementById('attachmentMenu');
+        const attachmentInputImage = document.getElementById('attachmentInputImage');
+        const attachmentInputMusic = document.getElementById('attachmentInputMusic');
+        const attachmentInputDocs = document.getElementById('attachmentInputDocs');
+
+        attachmentBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            attachmentMenu.classList.toggle('hidden');
+        });
+
+        // Hide menu when clicking outside
+        document.addEventListener('click', function () {
+            attachmentMenu.classList.add('hidden');
+        });
+
+        function chooseAttachment(type) {
+            attachmentMenu.classList.add('hidden');
+            if (type === 'image') {
+                attachmentInputImage.click();
+            } else if (type === 'music') {
+                attachmentInputMusic.click();
+            } else if (type === 'docs') {
+                attachmentInputDocs.click();
+            } else if (type === 'camera') {
+                // Use MediaDevices API to request camera permission and capture a photo
+                if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                    navigator.mediaDevices.getUserMedia({ video: true })
+                        .then(function(stream) {
+                            // Stop the stream immediately after permission is granted
+                            stream.getTracks().forEach(track => track.stop());
+                            // Open the file picker with camera capture if supported
+                            attachmentInputImage.setAttribute('capture', 'environment');
+                            attachmentInputImage.click();
+                            setTimeout(() => attachmentInputImage.removeAttribute('capture'), 1000);
+                        })
+                        .catch(function(err) {
+                            alert('Camera access denied or not available.');
+                        });
+                } else {
+                    alert('Camera not supported on this device.');
+                }
+            }
+        }
+
+        // Voice Note Button (demo: alert, no real recording)
+        document.getElementById('voiceNoteBtn').addEventListener('click', function() {
+            alert('Voice note recording feature coming soon!');
+        });
+
+        // Create Group Modal Logic
+        const createGroupBtn = document.getElementById('createGroupBtn');
+        const createGroupModal = document.getElementById('createGroupModal');
+        const closeCreateGroupModal = document.getElementById('closeCreateGroupModal');
+        const createGroupForm = document.getElementById('createGroupForm');
+        const groupItems = document.getElementById('groupItems');
+
+        if (createGroupBtn) {
+            createGroupBtn.addEventListener('click', () => {
+                createGroupModal.classList.remove('hidden');
+            });
+        }
+        if (closeCreateGroupModal) {
+            closeCreateGroupModal.addEventListener('click', () => {
+                createGroupModal.classList.add('hidden');
+            });
+        }
+        if (createGroupForm) {
+            createGroupForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const name = document.getElementById('groupName').value.trim();
+                const usersSelect = document.getElementById('groupUsers');
+                const selectedUsers = Array.from(usersSelect.selectedOptions).map(opt => opt.value);
+                if (name) {
+                    // Add new group to the list (demo only)
+                    const initials = name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 3);
+                    const li = document.createElement('li');
+                    li.className = "flex flex-col space-y-1 p-2 rounded hover:bg-gray-100 cursor-pointer";
+                    li.setAttribute('data-group', name);
+                    li.setAttribute('data-members', selectedUsers.join(', '));
+                    li.innerHTML = `
+                        <div class="flex items-center space-x-3">
+                            <span class="relative">
+                                <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 font-bold">${initials}</span>
+                            </span>
+                            <span class="text-gray-800 text-sm font-medium max-md:hidden">${name}</span>
+                        </div>
+                        <div class="ml-11">
+                            <span class="text-xs text-gray-500">Members: ${selectedUsers.join(', ') || 'None'}</span>
+                        </div>
+                    `;
+                    groupItems.appendChild(li);
+                    createGroupModal.classList.add('hidden');
+                    createGroupForm.reset();
+                }
+            });
+        }
+        // Optional: Close modal on outside click
+        if (createGroupModal) {
+            createGroupModal.addEventListener('click', function(e) {
+                if (e.target === createGroupModal) {
+                    createGroupModal.classList.add('hidden');
+                }
+            });
+        }
+
+        // Group chat switching logic
+        function setGroupChat(name, members, initials, color) {
+            document.getElementById('chatHeaderAvatar').src = '';
+            document.getElementById('chatHeaderAvatar').className = `w-8 h-8 rounded-full bg-${color}-100 flex items-center justify-center text-${color}-600 font-bold`;
+            document.getElementById('chatHeaderAvatar').style.background = '';
+            document.getElementById('chatHeaderAvatar').alt = 'Group';
+            document.getElementById('chatHeaderAvatar').outerHTML = `<span id="chatHeaderAvatar" class="w-8 h-8 rounded-full bg-${color}-100 flex items-center justify-center text-${color}-600 font-bold">${initials}</span>`;
+            document.getElementById('chatHeaderName').textContent = name;
+            document.getElementById('chatHeaderStatus').textContent = `Members: ${members}`;
+            document.getElementById('messages').innerHTML = `
+                <div class="flex justify-center items-center h-full text-gray-400 text-sm">
+                    Start a conversation in ${name}.
+                </div>
+            `;
+        }
+
+        // User chat switching logic
+        function setUserChat(name, avatar, status) {
+            // Restore avatar image for user
+            const chatHeader = document.getElementById('chatHeader');
+            let avatarElem = document.getElementById('chatHeaderAvatar');
+            if (!avatarElem || avatarElem.tagName !== 'IMG') {
+                // Replace span with img if needed
+                const newImg = document.createElement('img');
+                newImg.id = 'chatHeaderAvatar';
+                newImg.className = 'w-8 h-8 rounded-full';
+                newImg.alt = 'Chat';
+                chatHeader.replaceChild(newImg, chatHeader.querySelector('#chatHeaderAvatar'));
+                avatarElem = newImg;
+            }
+            avatarElem.src = avatar;
+            avatarElem.className = 'w-8 h-8 rounded-full';
+            avatarElem.alt = name;
+
+            document.getElementById('chatHeaderName').textContent = name;
+            document.getElementById('chatHeaderStatus').textContent = status || 'Online';
+            document.getElementById('messages').innerHTML = `
+                <div class="flex justify-center items-center h-full text-gray-400 text-sm">
+                    Start a conversation with ${name}.
+                </div>
+            `;
+        }
+
+        // Click handler for user items
+        document.querySelectorAll('#usersList ul li').forEach(function(li) {
+            li.addEventListener('click', function() {
+                const name = li.querySelector('span.text-gray-800')?.textContent || 'User';
+                const avatar = li.querySelector('img')?.src || '';
+                setUserChat(name, avatar, 'Online');
+            });
+        });
+
+        // Click handler for group items (update to show default chat for static groups too)
+        document.querySelectorAll('#groupItems li').forEach(function(li) {
+            li.addEventListener('click', function() {
+                const name = li.querySelector('span.text-gray-800')?.textContent || 'Group';
+                const initials = li.querySelector('span.font-bold')?.textContent || 'GRP';
+                let color = 'indigo';
+                if (initials === 'ADM') color = 'green';
+                if (initials === 'FIN') color = 'yellow';
+                if (initials === 'ACD') color = 'pink';
+                // Try to get members from data-members attribute or show default
+                const members = li.getAttribute('data-members') || 'Members not listed';
+                setGroupChat(name, members, initials, color);
+            });
+        });
+
+        // When creating a group, add data attributes for group chat
+        if (createGroupForm) {
+            createGroupForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const name = document.getElementById('groupName').value.trim();
+                const usersSelect = document.getElementById('groupUsers');
+                const selectedUsers = Array.from(usersSelect.selectedOptions).map(opt => opt.value);
+                if (name) {
+                    const initials = name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 3);
+                    let color = 'indigo';
+                    if (initials === 'ADM') color = 'green';
+                    if (initials === 'FIN') color = 'yellow';
+                    if (initials === 'ACD') color = 'pink';
+                    const li = document.createElement('li');
+                    li.className = "flex flex-col space-y-1 p-2 rounded hover:bg-gray-100 cursor-pointer";
+                    li.setAttribute('data-group', name);
+                    li.setAttribute('data-members', selectedUsers.join(', '));
+                    li.innerHTML = `
+                        <div class="flex items-center space-x-3">
+                            <span class="relative">
+                                <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-${color}-100 text-${color}-600 font-bold">${initials}</span>
+                            </span>
+                            <span class="text-gray-800 text-sm font-medium max-md:hidden">${name}</span>
+                        </div>
+                        <div class="ml-11">
+                            <span class="text-xs text-gray-500">Members: ${selectedUsers.join(', ') || 'None'}</span>
+                        </div>
+                    `;
+                    groupItems.appendChild(li);
+                    createGroupModal.classList.add('hidden');
+                    createGroupForm.reset();
+                }
+            });
+        }
+
+        // Group Settings Modal Logic
+        let currentGroupLi = null;
+
+        // Add settings icon to each group item (existing and new)
+        function addSettingsIconToGroup(li) {
+            if (!li.querySelector('.group-settings-btn')) {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.title = 'Group Settings';
+                btn.className = 'group-settings-btn ml-auto text-gray-400 hover:text-indigo-600';
+                btn.innerHTML = '<i class="fa fa-cog"></i>';
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    openGroupSettings(li);
+                });
+                li.querySelector('.flex.items-center').appendChild(btn);
+            }
+        }
+        // Add to all existing group items
+        document.querySelectorAll('#groupItems > li').forEach(addSettingsIconToGroup);
+
+        // Add to new group items
+        const groupItemsObserver = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                mutation.addedNodes.forEach(function(node) {
+                    if (node.nodeType === 1 && node.matches('li')) {
+                        addSettingsIconToGroup(node);
+                    }
+                });
+            });
+        });
+        groupItemsObserver.observe(document.getElementById('groupItems'), { childList: true });
+
+        // Demo: Current user
+        const currentUser = "John Doe";
+
+        // Open group settings modal
+        function openGroupSettings(li) {
+            currentGroupLi = li;
+            const name = li.querySelector('span.text-gray-800')?.textContent || '';
+            const members = (li.getAttribute('data-members') || '').split(',').map(m => m.trim()).filter(Boolean);
+            document.getElementById('editGroupName').value = name;
+            document.getElementById('groupSettingsTitle').textContent = `Group Settings: ${name}`;
+            const membersList = document.getElementById('groupMembersList');
+            membersList.innerHTML = members.length
+                ? members.map(m => `<li>${m}${m === currentUser ? ' <span class="text-xs text-indigo-500">(You)</span>' : ''}</li>`).join('')
+                : '<li class="text-gray-400">No members</li>';
+            // Show or hide "Leave Group" button
+            document.getElementById('leaveGroupBtn').style.display = members.includes(currentUser) ? '' : 'none';
+            document.getElementById('groupSettingsModal').classList.remove('hidden');
+        }
+
+        // Leave group logic (demo: just removes yourself from members in UI)
+        document.getElementById('leaveGroupBtn').onclick = function() {
+            if (currentGroupLi) {
+                let members = (currentGroupLi.getAttribute('data-members') || '').split(',').map(m => m.trim()).filter(Boolean);
+                const idx = members.indexOf(currentUser);
+                if (idx !== -1) members.splice(idx, 1);
+                currentGroupLi.setAttribute('data-members', members.join(', '));
+                // Update members display in modal
+                const membersList = document.getElementById('groupMembersList');
+                membersList.innerHTML = members.length
+                    ? members.map(m => `<li>${m}${m === currentUser ? ' <span class="text-xs text-indigo-500">(You)</span>' : ''}</li>`).join('')
+                    : '<li class="text-gray-400">No members</li>';
+                // Optionally, hide the group from sidebar if you are not a member anymore
+                if (!members.includes(currentUser)) {
+                    setTimeout(() => {
+                        currentGroupLi.style.display = "none";
+                        document.getElementById('groupSettingsModal').classList.add('hidden');
+                    }, 800);
+                }
+            }
+        };
+
+        // Save changes (demo: only updates group name in UI)
+        document.getElementById('saveGroupSettings').onclick = function() {
+            if (currentGroupLi) {
+                const newName = document.getElementById('editGroupName').value.trim();
+                if (newName) {
+                    currentGroupLi.querySelector('span.text-gray-800').textContent = newName;
+                    // Optionally update initials
+                    const initials = newName.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 3);
+                    currentGroupLi.querySelector('span.font-bold').textContent = initials;
+                    // Update modal title
+                    document.getElementById('groupSettingsTitle').textContent = `Group Settings: ${newName}`;
+                }
+                document.getElementById('groupSettingsModal').classList.add('hidden');
+            }
+        };
+
+        // User search logic
+        const userSearchInput = document.getElementById('userSearchInput');
+        const usersListUl = document.querySelector('#usersList ul');
+
+        function filterUsers() {
+            const query = userSearchInput.value.toLowerCase();
+            usersListUl.querySelectorAll('li').forEach(li => {
+                const name = li.querySelector('span.text-gray-800')?.textContent.toLowerCase() || '';
+                li.style.display = name.includes(query) ? '' : 'none';
+            });
+        }
+
+        userSearchInput.addEventListener('input', filterUsers);
+        document.getElementById('userSearchBtn').addEventListener('click', filterUsers);
     </script>
 </body>
 </html>
