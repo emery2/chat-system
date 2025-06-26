@@ -14,7 +14,8 @@
 <body class="bg-gray-50 min-h-screen flex flex-col items-center justify-center">
     <!-- Logo -->
     <div class="w-full flex justify-center mt-8 mb-4">
-        <img src="https://ines.ac.rw/wp-content/uploads/2021/06/INES-Logo-1.png" alt="INES-Ruhengeri Logo" class="h-20 w-auto">
+        INES CONVERSE
+        <!-- <img src="https://ines.ac.rw/wp-content/uploads/2021/06/INES-Logo-1.png" alt="INES-Ruhengeri Logo" class="h-20 w-auto"> -->
     </div>
     <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">INES-Ruhengeri Converse</h1>
 
@@ -252,6 +253,9 @@
             if (valid) {
                 // Placeholder for success
                 showAlert('alert-success', 'Login successful! (Demo only)');
+                setTimeout(() => {
+                    window.location.href = "chat.html";
+                }, 1000); // Redirect after 1 second
             } else {
                 showAlert('alert-error', 'Please fix the errors above.');
             }
